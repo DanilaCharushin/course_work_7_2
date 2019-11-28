@@ -135,7 +135,7 @@ template <class Data> int List<Data>::Node::get_offset_next()
 }
 template <class Data> int List<Data>::Node::get_offset_prev()
 {
-	return record.offset_next;
+	return record.offset_prev;
 }
 template <class Data> void List<Data>::Node::set_data(Data data)
 {
@@ -629,10 +629,11 @@ template <class Data> void List<Data>::print()
 
 	Node node(this);
 	int next_offset = get_offset_head();
+	int i = 0;
 	while (next_offset != 0)
 	{
 		node.read_from(next_offset);
-		cout << node.get_data() << endl;
+		cout << i++ << ".\t" << node.get_data() << endl;
 		next_offset = node.get_offset_next();
 	}
 }
@@ -816,8 +817,12 @@ template <class Data> void List<Data>::Iterator::set_list(List<Data> * list)
 }
 template <class Data> void List<Data>::Iterator::print_info()
 {
+	Node node(list);
+	node.read_from(current_offset);
 	cout << "List: " << list << endl;
 	cout << "Current offset: " << current_offset << endl;
+	cout << "Next offset: " << node.get_offset_next() << endl;
+	cout << "Prev offset: " << node.get_offset_prev() << endl;
 }
 
 #endif

@@ -13,7 +13,7 @@ private:
 	double real; //коэффициент вещественной части (a)
 	double img;  //коэффициент мнимой части (b)
 public:
-	Complex(int max) : real(rand() % max), img(rand() % max) {};
+	Complex(int max = 10) : real(rand() % max), img(rand() % max) {};
 	Complex(double real, double img) : real(real), img(img) {};
 	void set_real(double real);
 	void set_img(double img);

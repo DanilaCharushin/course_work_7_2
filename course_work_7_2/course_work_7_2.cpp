@@ -9,7 +9,7 @@
 
 using namespace std;
 
-typedef int CurrentType;
+typedef Complex CurrentType;
 const int WIDTH = 18;
 
 enum COLOR { 
@@ -84,7 +84,7 @@ void print_main_menu()
 void print_iterator_menu()
 {
 	cout << "****************************\n";
-	cout << "**********" << color<YELLOW> << "ITERATOR" << color << "**********\n";
+	cout << "***********" << color<YELLOW> << "ITERATOR" << color << "***********\n";
 	cout << setw(WIDTH) << left << "---TO HEAD ";
 	cout << color<TURQUOISE> << right << "(1)\n" << color;
 	cout << setw(WIDTH) << left << "---TO TAIL ";
@@ -95,6 +95,8 @@ void print_iterator_menu()
 	cout << color<TURQUOISE> << right << "(4)\n" << color;
 	cout << setw(WIDTH) << left << "---SET DATA ";
 	cout << color<TURQUOISE> << right << "(5)\n" << color;
+	cout << setw(WIDTH) << left << "---PRINT INFO ";
+	cout << color<TURQUOISE> << right << "(6)\n" << color;
 	cout << setw(WIDTH) << left << "---MENU ";
 	cout << color<TURQUOISE> << right << "(~)\n" << color;
 	cout << "****************************\n";
@@ -163,7 +165,7 @@ int main()
 				cout << "Index, data: ";
 				cin >> index >> data;
 				try {
-					list.insert_at(data);
+					list.insert_at(index, data);
 				}
 				catch (const range_error &ex) {
 					cout << color<RED> << ex.what() << color << endl;
@@ -356,14 +358,13 @@ int main()
 				{
 					system("cls");
 					cout << "****************************\n";
-					cout << "************" << color<YELLOW> << "ITERATOR" << color << "************\n";
+					cout << "**********" << color<YELLOW> << "LIST" << color << "**********\n";
 					try {
 						list.print();
 						cout << "****************************\n";
-						cout << "****************************\n             ";
+						cout << "****************************\n";
 						try {
-							cout << "Data by iterator: " << iterator.get_data() << endl;
-							cout << "             ";
+							cout << "Data by iterator: " << color<WHITE> << iterator.get_data() << color << endl;
 						}
 						catch (const exception &ex) {
 							cout << color<RED> << ex.what() << color << endl;
@@ -449,6 +450,12 @@ int main()
 								wait();
 								running_iterator = false;
 							}
+							break;
+						}
+						case 6:
+						{
+							iterator.print_info();
+							wait();
 							break;
 						}
 						default:
