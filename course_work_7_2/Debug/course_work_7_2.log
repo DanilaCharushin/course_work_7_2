@@ -1,0 +1,10 @@
+﻿  course_work_7_2.cpp
+c:\users\danila\source\repos\course_work_7_2\course_work_7_2\course_work_7_2.cpp(113): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\danila\source\repos\course_work_7_2\course_work_7_2\list.h(308): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+  c:\users\danila\source\repos\course_work_7_2\course_work_7_2\list.h(293): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  c:\users\danila\source\repos\course_work_7_2\course_work_7_2\course_work_7_2.cpp(115): note: выполняется компиляция ссылки на экземпляр шаблон функции "List<CurrentType>::List(String)"
+  c:\users\danila\source\repos\course_work_7_2\course_work_7_2\course_work_7_2.cpp(115): note: выполняется компиляция ссылки на экземпляр шаблон класс "List<CurrentType>"
+c:\users\danila\source\repos\course_work_7_2\course_work_7_2\list.h(646): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+  c:\users\danila\source\repos\course_work_7_2\course_work_7_2\list.h(640): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  c:\users\danila\source\repos\course_work_7_2\course_work_7_2\course_work_7_2.cpp(311): note: выполняется компиляция ссылки на экземпляр шаблон функции "void List<CurrentType>::print_info(void)"
+  course_work_7_2.vcxproj -> C:\Users\Danila\source\repos\course_work_7_2\Debug\course_work_7_2.exe
