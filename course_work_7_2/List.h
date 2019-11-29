@@ -118,7 +118,7 @@ public:
 
 	friend class Iterator;
 };
-
+//assasdasdasdasd
 //---------Node---------//
 template <class Data> List<Data>::Node::Node(List<Data> * list) : list(list), offset(0)
 {
