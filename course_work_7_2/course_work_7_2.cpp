@@ -12,7 +12,7 @@ using namespace std;
 
 typedef Matrix CurrentType;
 const int WIDTH = 10;
-
+ 
 enum COLOR { 
 	BLACK = 0, 
 	GREY = 8, 
