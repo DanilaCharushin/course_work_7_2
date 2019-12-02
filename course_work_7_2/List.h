@@ -118,7 +118,7 @@ public:
 
 	friend class Iterator;
 };
-//assasdasdasdasd
+
 //---------Node---------//
 template <class Data> List<Data>::Node::Node(List<Data> * list) : list(list), offset(0)
 {
@@ -633,7 +633,7 @@ template <class Data> void List<Data>::print()
 	while (next_offset != 0)
 	{
 		node.read_from(next_offset);
-		cout << i++ << ".\t" << node.get_data() << endl;
+		cout << i++ << ".\n\t" << node.get_data() << endl;
 		next_offset = node.get_offset_next();
 	}
 }
@@ -665,6 +665,7 @@ template <class Data> void List<Data>::sort()
 			
 		while (offset2 != 0)
 		{
+			offset2 = node2.get_offset_next();
 			if (!(node1.get_data() < node2.get_data()))
 			{
 				Data tmp = node1.get_data();
@@ -673,20 +674,12 @@ template <class Data> void List<Data>::sort()
 				node1.save();
 				node2.save();
 			}
-			offset2 = node2.get_offset_next();
 			node2.read_from(offset2);
 		}
 		offset1 = node1.get_offset_next();
 		node1.read_from(offset1);
 	}
 	save();
-	/*
-	int newHead;
-	int newTail;
-	merge_sort(header.offset_head, newHead, newTail);
-	set_head(newHead);
-	set_tail(newTail);
-	save();*/
 }
 template <class Data> int List<Data>::get_size()
 {
@@ -825,4 +818,101 @@ template <class Data> void List<Data>::Iterator::print_info()
 	cout << "Prev offset: " << node.get_offset_prev() << endl;
 }
 
+#include "Matrix.h"
+template <> void List<Matrix>::Node::save()
+{
+	if (offset > 0)
+		list->seekp(offset, ios::beg);
+	else
+	{
+		list->seekp(0, ios::end);
+		offset = static_cast<int>(list->tellp());
+	}
+	int n = record.data.get_N();
+	list->write(reinterpret_cast<char*>(&n), sizeof(int));
+	int m = record.data.get_M();
+	list->write(reinterpret_cast<char*>(&m), sizeof(int));
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+		{
+			double v = record.data.get_value(i, j);
+			list->write(reinterpret_cast<char*>(&v), sizeof(double));
+		}
+	list->write(reinterpret_cast<char*>(&record.offset_next), sizeof(int));
+	list->write(reinterpret_cast<char*>(&record.offset_prev), sizeof(int));
+}
+template <> void List<Matrix>::Node::read_from(int offset)
+{
+	this->offset = offset;
+	list->seekg(offset, ios::beg);
+	
+	int n;
+	list->read(reinterpret_cast<char*>(&n), sizeof(int));
+	int m;
+	list->read(reinterpret_cast<char*>(&m), sizeof(int));
+	record.data = Matrix(n, m);
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+		{
+			double v;
+			list->read(reinterpret_cast<char*>(&v), sizeof(double));
+			record.data.get_value(i, j) = v;
+		}
+	list->read(reinterpret_cast<char*>(&record.offset_next), sizeof(int));
+	list->read(reinterpret_cast<char*>(&record.offset_prev), sizeof(int));
+}
+template <> void List<Matrix>::purge(int offset)//очистка
+{
+	seekp(0, ios::end);
+	int SIZE = 0;
+	int n = Matrix::GET_N();
+	int m = Matrix::GET_M();
+	SIZE += 4 * sizeof(int); // N, M, next, prev
+	SIZE += n * m * sizeof(double); //value
+	int moved_node_offset = static_cast<int>(tellg()) - SIZE;
+
+	if (offset == moved_node_offset)
+	{
+		trunc(offset);//обрезать
+		return;
+	}
+
+	if (offset < sizeof(Header))
+	{
+		trunc(sizeof(Header));
+		return;
+	}
+
+	Node moved_node(this);
+	moved_node.read_from(moved_node_offset);
+	moved_node.set_offset(offset);
+	moved_node.save();
+
+	int prev_offset = moved_node.get_offset_prev();
+	if (prev_offset == 0)
+		set_offset_head(offset);
+	else
+	{
+		Node prev_node(this);
+		prev_node.read_from(prev_offset);
+		prev_node.set_offset_next(offset);
+		prev_node.save();
+	}
+
+	int next_offset = moved_node.get_offset_next();
+	if (next_offset == 0)
+		set_offset_tail(offset);
+	else
+	{
+		Node next_node(this);
+		next_node.read_from(next_offset);
+		next_node.set_offset_prev(offset);
+		next_node.save();
+	}
+	save();
+	trunc(moved_node_offset);
+}
 #endif
+
+

@@ -6,11 +6,12 @@
 #include <iomanip>
 #include <Windows.h>
 #include <ctime>
+#include <typeinfo>
 
 using namespace std;
 
-typedef Complex CurrentType;
-const int WIDTH = 18;
+typedef Matrix CurrentType;
+const int WIDTH = 10;
 
 enum COLOR { 
 	BLACK = 0, 
@@ -34,57 +35,44 @@ ostream& color(ostream &text)
 
 void print_main_menu()
 {
-	cout << "******************************\n";
-	cout << "*************" << color<YELLOW> << "MENU" << color << "*************\n";
-	cout << setw(WIDTH) << left << "---INSERT RANDOM  ";
-	cout << color<GREEN> << right << "(0)\n" << color;
-	cout << setw(WIDTH) << left << "---INSERT FIRST  ";
-	cout << color<GREEN> << right << "(1)\n" << color;
-	cout << setw(WIDTH) << left << "---INSERT LAST  ";
-	cout << color<GREEN> << right << "(2)\n" << color;
-	cout << setw(WIDTH) << left << "---INSERT AT  ";
-	cout << color<GREEN> << right << "(3)\n" << color;
-	cout << setw(WIDTH) << left << "---REMOVE FIRST  ";
-	cout << color<GREEN> << right << "(4)\n" << color;
-	cout << setw(WIDTH) << left << "---REMOVE LAST  ";
-	cout << color<GREEN> << right << "(5)\n" << color;
-	cout << setw(WIDTH) << left << "---REMOVE AT  ";
-	cout << color<GREEN> << right << "(6)\n" << color;
-	cout << setw(WIDTH) << left << "---GET FIRST  ";
-	cout << color<GREEN> << right << "(7)\n" << color;
-	cout << setw(WIDTH) << left << "---GET LAST  ";
-	cout << color<GREEN> << right << "(8)\n" << color;
-	cout << setw(WIDTH) << left << "---GET AT  ";
-	cout << color<GREEN> << right << "(9)\n" << color;
-	cout << setw(WIDTH) << left << "---SET FIRST ";
-	cout << color<GREEN> << right << "(10)\n" << color;
-	cout << setw(WIDTH) << left << "---SET LAST ";
-	cout << color<GREEN> << right << "(11)\n" << color;
-	cout << setw(WIDTH) << left << "---SET AT ";
-	cout << color<GREEN> << right << "(12)\n" << color;
-	cout << setw(WIDTH) << left << "---PRINT LIST";
-	cout << color<GREEN> << right << "(13)\n" << color;
-	cout << setw(WIDTH) << left << "---PRINT INFO ";
-	cout << color<GREEN> << right << "(14)\n" << color;
-	cout << setw(WIDTH) << left << "---PRINT SIZE ";
-	cout << color<GREEN> << right << "(15)\n" << color;
-	cout << setw(WIDTH) << left << "---SORT ";
-	cout << color<GREEN> << right << "(16)\n" << color;
-	cout << setw(WIDTH) << left << "---IS EMPTY ";
-	cout << color<GREEN> << right << "(17)\n" << color;
-	cout << setw(WIDTH) << left << "---CLEAR ";
-	cout << color<GREEN> << right << "(18)\n" << color;
-	cout << setw(WIDTH) << left << "---ITERATOR ";
-	cout << color<GREEN> << right << "(19)\n" << color;
-	cout << setw(WIDTH) << left << "---EXIT ";
-	cout << color<GREEN> << right << "(~)\n" << color;
-	cout << "******************************\n";
-	cout << "******************************\n             ";
+	cout << color<YELLOW> << "(7.2)" << color << "D-linked list in bin file\n";
+	cout << "------------------------------\n";
+	cout << "-------------" << color<YELLOW> << "MENU" << color << "-------------\n";
+	cout << color<GREEN> << "---INSERT:" << endl;
+	cout << setw(WIDTH) << color << left << "rand" << color<PINK> << right << "(0)" << endl;
+	cout << setw(WIDTH) << color << left << "first" << color<PINK> << right << "(1)" << endl;
+	cout << setw(WIDTH) << color << left << "last" << color<PINK> << right << "(2)" << endl;
+	cout << setw(WIDTH) << color << left << "at" << color<PINK> << right << "(3)" << endl;
+	cout << color<GREEN> << "---REMOVE:" << endl;
+	cout << setw(WIDTH) << color << left << "first" << color<PINK> << right << "(4)" << endl;
+	cout << setw(WIDTH) << color << left << "last" << color<PINK> << right << "(5)" << endl;
+	cout << setw(WIDTH) << color << left << "at" << color<PINK> << right << "(6)" << endl;
+	cout << color<GREEN> << "---GET:" << endl;
+	cout << setw(WIDTH) << color << left << "first" << color<PINK> << right << "(7)" << endl;
+	cout << setw(WIDTH) << color << left << "last" << color<PINK> << right << "(8)" << endl;
+	cout << setw(WIDTH) << color << left << "at" << color<PINK> << right << "(9)" << endl;
+	cout << color<GREEN> << "---SET:" << endl;
+	cout << setw(WIDTH) << color << left << "first" << color<PINK> << right << "(10)" << endl;
+	cout << setw(WIDTH) << color << left << "last" << color<PINK> << right << "(11)" << endl;
+	cout << setw(WIDTH) << color << left << "at" << color<PINK> << right << "(12)" << endl;
+	cout << color<GREEN> << "---PRINT:" << endl;
+	cout << setw(WIDTH) << color << left << "list" << color<PINK> << right << "(13)" << endl;
+	cout << setw(WIDTH) << color << left << "info" << color<PINK> << right << "(14)" << endl;
+	cout << setw(WIDTH) << color << left << "size" << color<PINK> << right << "(15)" << endl;
+	cout << color<GREEN> << "---OTHER:" << endl;
+	cout << setw(WIDTH) << color << left << "sort" << color<PINK> << right << "(16)" << endl;
+	cout << setw(WIDTH) << color << left << "is empty" << color<PINK> << right << "(17)" << endl;
+	cout << setw(WIDTH) << color << left << "clear" << color<PINK> << right << "(18)" << endl;
+	cout << setw(WIDTH) << color << left << "iterator" << color<PINK> << right << "(19)" << endl;
+	cout << setw(WIDTH) << left << color<GREEN> << "---EXIT" << color<PINK> << right << "(~)\n" << color;
+	cout << "------------------------------\n";
+	cout << "------------------------------\n               ";
 }
+
 void print_iterator_menu()
 {
-	cout << "****************************\n";
-	cout << "***********" << color<YELLOW> << "ITERATOR" << color << "***********\n";
+	cout << "------------------------------\n";
+	cout << "------------" << color<YELLOW> << "ITERATOR" << color << "------------\n";
 	cout << setw(WIDTH) << left << "---TO HEAD ";
 	cout << color<TURQUOISE> << right << "(1)\n" << color;
 	cout << setw(WIDTH) << left << "---TO TAIL ";
@@ -99,8 +87,8 @@ void print_iterator_menu()
 	cout << color<TURQUOISE> << right << "(6)\n" << color;
 	cout << setw(WIDTH) << left << "---MENU ";
 	cout << color<TURQUOISE> << right << "(~)\n" << color;
-	cout << "****************************\n";
-	cout << "****************************\n             ";
+	cout << "------------------------------\n";
+	cout << "------------------------------\n             ";
 }
 void wait()
 {
@@ -113,15 +101,15 @@ int main()
 	//размер окна консоли
 	system("mode con cols=80 lines=80");
 	srand(time(0));
-	
-	List<CurrentType> list("file.bin");
+
+	String file_name = typeid(CurrentType).name(); 
+	file_name += ".bin";
+	List<CurrentType> list(file_name);
 	List<CurrentType>::Iterator iterator(&list);
 
 	bool running = true;
 	while (running)
 	{
-		system("cls");
-		
 		system("cls");
 		print_main_menu();
 		int key;
@@ -291,12 +279,12 @@ int main()
 			case 13:
 			{
 				system("cls");
-				cout << "****************************\n";
-				cout << "************" << color<YELLOW> << "LIST" << color << "************\n";
+				cout << "--------------------------------\n";
+				cout << "--------------" << color<YELLOW> << "LIST" << color << "--------------\n";
 				try {
 					list.print();
-					cout << "****************************\n";
-					cout << "****************************\n";
+					cout << "------------------------------\n";
+					cout << "------------------------------\n";
 				}
 				catch (const exception &ex) {
 					cout << color<RED> << ex.what() << color << endl;
@@ -307,12 +295,12 @@ int main()
 			case 14:
 			{
 				system("cls");
-				cout << "****************************\n";
-				cout << "************" << color<YELLOW> << "INFO" << color << "************\n";
+				cout << "------------------------------\n";
+				cout << "--------------" << color<YELLOW> << "INFO" << color << "--------------\n";
 				try {
 					list.print_info();
-					cout << "****************************\n";
-					cout << "****************************\n";
+					cout << "------------------------------\n";
+					cout << "------------------------------\n";
 				}
 				catch (const exception &ex) {
 					cout << color<RED> << ex.what() << color << endl;
@@ -357,12 +345,12 @@ int main()
 				while (running_iterator)
 				{
 					system("cls");
-					cout << "****************************\n";
-					cout << "**********" << color<YELLOW> << "LIST" << color << "**********\n";
+					cout << "------------------------------\n";
+					cout << "-------------" << color<YELLOW> << "LIST" << color << "-------------\n";
 					try {
 						list.print();
-						cout << "****************************\n";
-						cout << "****************************\n";
+						cout << "----------------------------\n";	
+						cout << "----------------------------\n"; 
 						try {
 							cout << "Data by iterator: " << color<WHITE> << iterator.get_data() << color << endl;
 						}
@@ -386,6 +374,10 @@ int main()
 							try {
 								iterator.to_head();
 							}
+							catch (const range_error &ex) {
+								cout << color<RED> << ex.what() << color << endl;
+								wait();
+							}
 							catch (const invalid_argument &ex) {
 								cout << color<RED> << ex.what() << color << endl;
 								wait();
@@ -397,6 +389,10 @@ int main()
 						{
 							try {
 								iterator.to_tail();
+							}
+							catch (const range_error &ex) {
+								cout << color<RED> << ex.what() << color << endl;
+								wait();
 							}
 							catch (const invalid_argument &ex) {
 								cout << color<RED> << ex.what() << color << endl;

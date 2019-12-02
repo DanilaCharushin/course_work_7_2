@@ -1,6 +1,17 @@
 #include "pch.h"
 #include "Matrix.h"
 
+int Matrix::SIZE_N = 0;
+int Matrix::SIZE_M = 0;
+
+Matrix::Matrix(int D) : N(D % 4 + 1), M(D % 4 + 1)
+{
+	this->value = new double*[N];
+	for (int i = 0; i < N; i++)
+		this->value[i] = new double[M];
+
+	fill_random();
+}
 Matrix::Matrix(int N, int M, double value) : N(N), M(M)
 {
 	this->value = new double*[N];
@@ -52,6 +63,22 @@ Matrix::~Matrix()
 			delete[] value[i];
 	if (value)
 		delete[] value;
+}
+void Matrix::SET_N(int n)
+{
+	SIZE_N = n;
+}
+void Matrix::SET_M(int m)
+{
+	SIZE_M = m;
+}
+int Matrix::GET_N()
+{
+	return SIZE_N;
+}
+int Matrix::GET_M()
+{
+	return SIZE_M;
 }
 void Matrix::fill_const(double value)
 {
@@ -197,6 +224,18 @@ Matrix & Matrix::operator/(double value)
 			this->value[i][j] /= value;
 	return *this;
 }
+bool operator<(Matrix c1, Matrix c2)
+{
+	int sum1 = 0;
+	int sum2 = 0;
+	for (int i = 0; i < c1.N; i++)
+		for (int j = 0; j < c1.M; j++)
+			sum1 += c1.value[i][j];
+	for (int i = 0; i < c2.N; i++)
+		for (int j = 0; j < c2.M; j++)
+			sum2 += c2.value[i][j];
+	return sum1 < sum2 ? true : false;
+}
 Matrix operator+(Matrix m1, Matrix m2)
 {
 	if (m1.N == m2.N && m1.M == m2.M)
@@ -250,7 +289,7 @@ ostream & operator<<(ostream & os, Matrix m)
 	{
 		for (int j = 0; j < m.M; j++)
 			os << "\t" << m.value[i][j];
-		os << endl;
+		os << "\n\t";
 	}
 	return os;
 }
@@ -258,6 +297,9 @@ istream & operator>>(istream & in, Matrix &m)
 {
 	for (int i = 0; i < m.N; i++)
 		for (int j = 0; j < m.M; j++)
+		{
+			cout << "Value[" << i << "][" << j << "] = ";
 			in >> m.value[i][j];
+		}
 	return in;
 }

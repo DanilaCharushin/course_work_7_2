@@ -13,8 +13,9 @@ private:
 	double real; //коэффициент вещественной части (a)
 	double img;  //коэффициент мнимой части (b)
 public:
-	Complex(int max = 10) : real(rand() % max), img(rand() % max) {};
+	Complex(int max = 10) : real(rand() % (max + 1)), img(rand() % (max + 1)) {};
 	Complex(double real, double img) : real(real), img(img) {};
+	Complex(double ro, double fi, bool flag);
 	void set_real(double real);
 	void set_img(double img);
 	double get_real();
@@ -22,6 +23,8 @@ public:
 	double get_fi();
 	double get_ro();
 	string to_string();
+	void exp();
+	void alg();
 	bool operator>(Complex c);
 	bool operator>=(Complex c);
 	bool operator<(Complex c);

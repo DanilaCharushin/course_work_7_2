@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Complex.h"
 
+Complex::Complex(double ro, double fi, bool flag)
+{
+	real = ro * cos(fi * 3.1415926 / 180);
+	img = ro * sin(fi * 3.1415926 / 180);
+}
 void Complex::set_real(double real)
 {
 	this->real = real;
@@ -19,7 +24,7 @@ double Complex::get_img()
 }
 double Complex::get_fi()
 {
-	return atan(img / real);
+	return atan(img / real) * 180 / 3.1415926;
 }
 double Complex::get_ro()
 {
@@ -87,6 +92,14 @@ string Complex::to_string()
 			}
 		}
 	return str;
+}
+void Complex::exp()
+{
+	cout << get_ro() << "\\_" << get_fi() << endl;
+}
+void Complex::alg()
+{
+	cout << *this << endl;
 }
 bool Complex::operator>(Complex c)
 {

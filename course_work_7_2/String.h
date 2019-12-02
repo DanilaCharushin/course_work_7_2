@@ -17,7 +17,7 @@ public:
 	String(const double number);
 	String(const String &s);
 	~String();
-
+	
 	String& operator=(const String &s);
 	friend String operator+(String s1, String s2);
 	friend String operator+(String s, const char *text);
